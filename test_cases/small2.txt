@@ -1,5 +1,5 @@
 main (x, y, z)
 {
 	// Return a boolean result
-	~x <= 0
+	5 == 5
 }
