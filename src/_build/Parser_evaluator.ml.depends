@@ -1,1 +1,1 @@
-Parser_evaluator.ml: Parser_printer Parser_types
+Parser_evaluator.ml: Hashtbl Parser_printer Parser_types

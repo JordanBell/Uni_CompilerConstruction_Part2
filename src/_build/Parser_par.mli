@@ -6,6 +6,7 @@ type token =
   | TYPE_INT
   | TIMES
   | SEQ
+  | REF
   | READINT
   | PRINTINT
   | PLUS

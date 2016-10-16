@@ -53,6 +53,7 @@ rule read =
 	| '='			{ ASG }
 	| ';'			{ SEQ }
 	| ','			{ COMMA }
+	| '&'			{ REF }
 	| '~'			{ DEREF }
 	| identifier_string	{ IDENTIFIER (Lexing.lexeme lexbuf) }
 

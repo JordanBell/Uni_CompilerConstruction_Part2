@@ -37,6 +37,7 @@ open Parser_types
 %token NOT
 
 %token DEREF
+%token REF
 
 %token TYPE_INT
 %token <string> IDENTIFIER
@@ -64,6 +65,7 @@ open Parser_types
 %left OR
 %left NOT
 
+%right REF
 %right DEREF
 
 %left PLUS
@@ -113,6 +115,7 @@ exp :
 	(* Misc *)
 	| CONST		 				{ Const ($1) }
 	| IDENTIFIER	 				{ Identifier ($1) }
+	| REF; e = exp;					{ Ref (e) }
 	| DEREF; e = exp;				{ Deref (e) }
 	| CURLY_OPEN; e = exp; CURLY_CLOSE 		{ Scope (e) }
 	| e = exp; SEQ; f = exp				{ Seq (e, f) }

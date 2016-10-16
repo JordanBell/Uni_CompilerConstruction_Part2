@@ -6,6 +6,7 @@ open Parser_evaluator
 
 let filename = Sys.argv.(1)
 let num_args = Array.length Sys.argv
+let store = Hashtbl.create 100
 let is_verbose = ref false
 
 let parse_to_program i_str = 
@@ -43,18 +44,16 @@ let () =
 	if num_lines > 0 then
 		let lines_as_string = String.concat "\n" !i_lines in
 		let parsed_program = parse_to_program lines_as_string in
+
+		if !is_verbose then printf "Result:\n"; 
+		if !is_verbose then print_parse_result parsed_program;
+
 		(* Evaluate the program *)
 		match parsed_program with
 			| [] -> ()
 			| (Myfunc (_, _, e))::tl -> 
-				let evaluated_expression = evaluate_expression [] e in
-				printf "Evaluated result: ";
-				(* Print the resulting eval_result *)
-				(match evaluated_expression with
-					| Int (i) -> printf "%d\n" i
-					| Bool (b) -> if b then printf "true\n" else printf "false\n"
-					| String (s) -> printf "%s\n" s
-					| Unit -> printf "Unit\n");;
+				let evaluated_expression = evaluate_expression store e in
+				print_eval_result store evaluated_expression;
 		
 	myprint "***** Parsing FINISHED on file: %s\n\n" filename
 

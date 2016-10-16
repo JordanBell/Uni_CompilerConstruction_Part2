@@ -107,6 +107,11 @@ let rec print_expression expr acc =
 			print_expression e (acc+1);
 			printf "\n%s)" indent_str
 
+		| Ref (e) -> 
+			printf "%sRef\n%s(\n" indent_str indent_str; 
+			print_expression e (acc+1);
+			printf "\n%s)" indent_str
+
 		| Printint (e) -> 
 			printf "%sPrintint\n%s(\n" indent_str indent_str; 
 			print_expression e (acc+1);
@@ -141,5 +146,14 @@ let rec print_program = function
 		print_program tl
 
 let print_parse_result parse_result = printf "*** Result: \n"; print_program parse_result
+
+let rec print_eval_result store e_eval_result = 
+	(* Print the resulting eval_result *)
+	match e_eval_result with
+		| Int (i) -> printf "%d\n" i
+		| Bool (b) -> if b then printf "true\n" else printf "false\n"
+		| String (s) -> printf "%s\n" s
+		| Identifier (s) -> let s_eval_result = Hashtbl.find store s in print_eval_result store s_eval_result
+		| Unit -> printf "Unit\n"
 
 
